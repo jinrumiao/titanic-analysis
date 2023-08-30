@@ -12,11 +12,14 @@ jupyter:
   nbformat_minor: 0
 ---
 
-::: {.cell .markdown colab_type="text" id="view-in-github"}
-`<a href="https://colab.research.google.com/github/jinrumiao/titanic-analysis/blob/main/%E5%B0%88%E9%A1%8C%E5%AF%A6%E4%BD%9C_01%EF%BC%9A%E9%90%B5%E9%81%94%E5%B0%BC%E8%99%9F%E5%AD%98%E6%B4%BB%E9%A0%90%E6%B8%AC.ipynb" target="_parent">`{=html}`<img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>`{=html}`</a>`{=html}
-:::
+<div class="cell markdown" colab_type="text" id="view-in-github">
 
-::: {.cell .code execution_count="1" id="1H4G77tIBcha"}
+<a href="https://colab.research.google.com/github/jinrumiao/titanic-analysis/blob/main/%E5%B0%88%E9%A1%8C%E5%AF%A6%E4%BD%9C_01%EF%BC%9A%E9%90%B5%E9%81%94%E5%B0%BC%E8%99%9F%E5%AD%98%E6%B4%BB%E9%A0%90%E6%B8%AC.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+</div>
+
+<div class="cell code" execution_count="1" id="1H4G77tIBcha">
+
 ``` python
 import pandas as pd
 import numpy as np
@@ -31,9 +34,11 @@ matplotlib.style.use("ggplot")
 sns.set_style("white")
 matplotlib.rcParams["figure.figsize"] = 8, 6
 ```
-:::
 
-::: {.cell .code execution_count="2" id="QqBKGnxZBdKe"}
+</div>
+
+<div class="cell code" execution_count="2" id="QqBKGnxZBdKe">
+
 ``` python
 def plot_distribution(df, var, target, **kwargs):
     row = kwargs.get("row", None)
@@ -63,9 +68,13 @@ def clean_ticket(ticket):
     else:
         return "XXX"
 ```
-:::
 
-::: {.cell .code execution_count="3" colab="{\"base_uri\":\"https://localhost:8080/\"}" id="s70XpfI-BgmB" outputId="2d32c775-96b4-4a96-9fa9-6bf2866eea84"}
+</div>
+
+<div class="cell code" execution_count="3"
+colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}"
+id="s70XpfI-BgmB" outputId="2d32c775-96b4-4a96-9fa9-6bf2866eea84">
+
 ``` python
 # 載入csv
 df = pd.read_csv('https://raw.githubusercontent.com/dsindy/kaggle-titanic/master/data/train.csv')
@@ -73,7 +82,8 @@ df = pd.read_csv('https://raw.githubusercontent.com/dsindy/kaggle-titanic/master
 print(df.info())
 ```
 
-::: {.output .stream .stdout}
+<div class="output stream stdout">
+
     <class 'pandas.core.frame.DataFrame'>
     RangeIndex: 891 entries, 0 to 890
     Data columns (total 12 columns):
@@ -94,14 +104,19 @@ print(df.info())
     dtypes: float64(2), int64(5), object(5)
     memory usage: 83.7+ KB
     None
-:::
-:::
 
-::: {.cell .markdown id="iELkIgoyBnS3"}
+</div>
+
+</div>
+
+<div class="cell markdown" id="iELkIgoyBnS3">
+
 **處理離散型資料**
-:::
 
-::: {.cell .code execution_count="4" id="JBaRuNZqBjTF"}
+</div>
+
+<div class="cell code" execution_count="4" id="JBaRuNZqBjTF">
+
 ``` python
 # 1、Name中間包含頭銜，又代表社會地位，可能會與是否生存有關
 title_dictionary = {
@@ -130,16 +145,20 @@ df["Title"] = df["Title"].map(title_dictionary)
 title_one_hot_ec = pd.get_dummies(df["Title"], prefix="Title", dtype=int)
 df = pd.concat([df, title_one_hot_ec], axis=1)
 ```
-:::
 
-::: {.cell .code execution_count="5" id="o53YY07XBr6H"}
+</div>
+
+<div class="cell code" execution_count="5" id="o53YY07XBr6H">
+
 ``` python
 # 2、Sex
 df["Sex"] = df["Sex"].map({"male": 0, "female": 1})
 ```
-:::
 
-::: {.cell .code execution_count="6" id="a0uJxIvUBuyC"}
+</div>
+
+<div class="cell code" execution_count="6" id="a0uJxIvUBuyC">
+
 ``` python
 # 3、Ticket
 df["Ticket_cat"] = df["Ticket"].map(clean_ticket)
@@ -147,9 +166,11 @@ df["Ticket_cat"] = df["Ticket"].map(clean_ticket)
 ticket_one_hot_ec = pd.get_dummies(df["Ticket_cat"], prefix="Ticket", dtype=int)
 df = pd.concat([df, ticket_one_hot_ec], axis=1)
 ```
-:::
 
-::: {.cell .code execution_count="7" id="yE7IS-r5BxWM"}
+</div>
+
+<div class="cell code" execution_count="7" id="yE7IS-r5BxWM">
+
 ``` python
 # 4、Cabin 204/891
 df["Cabin"] = df["Cabin"].fillna("U")
@@ -158,9 +179,11 @@ df["Cabin"] = df["Cabin"].astype(str).map(lambda c: c[0])
 cabin_one_hot_ec = pd.get_dummies(df["Cabin"], prefix="Cabin", dtype=int)
 df = pd.concat([df, cabin_one_hot_ec], axis=1)
 ```
-:::
 
-::: {.cell .code execution_count="8" id="QaGIvuksB2cI"}
+</div>
+
+<div class="cell code" execution_count="8" id="QaGIvuksB2cI">
+
 ``` python
 # 5、Embarked 889/891
 df["Embarked"] = df["Embarked"].fillna("U")
@@ -168,14 +191,19 @@ df["Embarked"] = df["Embarked"].fillna("U")
 embarked_one_hot_ec = pd.get_dummies(df["Embarked"], prefix="Embarked", dtype=int)
 df = pd.concat([df, embarked_one_hot_ec], axis=1)
 ```
-:::
 
-::: {.cell .code execution_count="9" colab="{\"base_uri\":\"https://localhost:8080/\"}" id="8kiodrxVB8er" outputId="c4381b72-64f3-49ac-da8c-738adf7324c4"}
+</div>
+
+<div class="cell code" execution_count="9"
+colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}"
+id="8kiodrxVB8er" outputId="c4381b72-64f3-49ac-da8c-738adf7324c4">
+
 ``` python
 df.info()
 ```
 
-::: {.output .stream .stdout}
+<div class="output stream stdout">
+
     <class 'pandas.core.frame.DataFrame'>
     RangeIndex: 891 entries, 0 to 890
     Data columns (total 64 columns):
@@ -247,10 +275,15 @@ df.info()
      63  Embarked_U      891 non-null    int64  
     dtypes: float64(2), int64(56), object(6)
     memory usage: 445.6+ KB
-:::
-:::
 
-::: {.cell .code execution_count="10" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":1000}" id="8XT_TPJfCBqe" outputId="5bff1896-c04a-411d-95d6-08d45a7aa77f"}
+</div>
+
+</div>
+
+<div class="cell code" execution_count="10"
+colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:1000}"
+id="8XT_TPJfCBqe" outputId="5bff1896-c04a-411d-95d6-08d45a7aa77f">
+
 ``` python
 plot_catecories(df, cat="Sex", target="Survived")  # 繪出Sex與Survived的關係，女性的生存率遠高於男性
 plot_catecories(df, cat="Title", target="Survived")  # 繪出Title與Survived的關係，Mrs與Miss為生存率最高的兩個分類
@@ -261,7 +294,8 @@ plot_catecories(df, cat="Embarked", target="Survived")  # 繪出Embarked與Survi
 plt.show()
 ```
 
-::: {.output .stream .stderr}
+<div class="output stream stderr">
+
     /usr/local/lib/python3.10/dist-packages/seaborn/axisgrid.py:712: UserWarning: Using the barplot function without specifying `order` is likely to produce an incorrect plot.
       warnings.warn(warning)
     /usr/local/lib/python3.10/dist-packages/seaborn/axisgrid.py:712: UserWarning: Using the barplot function without specifying `order` is likely to produce an incorrect plot.
@@ -272,37 +306,52 @@ plt.show()
       warnings.warn(warning)
     /usr/local/lib/python3.10/dist-packages/seaborn/axisgrid.py:712: UserWarning: Using the barplot function without specifying `order` is likely to produce an incorrect plot.
       warnings.warn(warning)
-:::
 
-::: {.output .display_data}
-![](vertopal_97070aa08a854259961b348097bc3714/433d1c6b887b84a4bdac671d5bb0aee51450e656.png)
-:::
+</div>
 
-::: {.output .display_data}
-![](vertopal_97070aa08a854259961b348097bc3714/1211db06dd2de675c53e312aa9e02422799f1d29.png)
-:::
+<div class="output display_data">
 
-::: {.output .display_data}
-![](vertopal_97070aa08a854259961b348097bc3714/dbe7b8b7995213f46e892293f022e16aec9c1fb1.png)
-:::
+![](433d1c6b887b84a4bdac671d5bb0aee51450e656.png)
 
-::: {.output .display_data}
-![](vertopal_97070aa08a854259961b348097bc3714/6ff53106126b1f4facdae2e242419b2275d8a3f2.png)
-:::
+</div>
 
-::: {.output .display_data}
-![](vertopal_97070aa08a854259961b348097bc3714/a1758b432d95856b23eda9538d605abebfe152a6.png)
-:::
-:::
+<div class="output display_data">
 
-::: {.cell .markdown id="YcUkDDJoCgz6"}
+![](1211db06dd2de675c53e312aa9e02422799f1d29.png)
+
+</div>
+
+<div class="output display_data">
+
+![](dbe7b8b7995213f46e892293f022e16aec9c1fb1.png)
+
+</div>
+
+<div class="output display_data">
+
+![](6ff53106126b1f4facdae2e242419b2275d8a3f2.png)
+
+</div>
+
+<div class="output display_data">
+
+![](a1758b432d95856b23eda9538d605abebfe152a6.png)
+
+</div>
+
+</div>
+
+<div class="cell markdown" id="YcUkDDJoCgz6">
+
 **處理連續型資料**
 
 -   其中Age的空值有使用mean以及median比較，兩者的最終成果無太大差異
 -   Pclass也有測試改用one_hot_encoder的形式，結果也與原本的label_encoder無差異
-:::
 
-::: {.cell .code execution_count="11" id="xHF2_FWiCjTQ"}
+</div>
+
+<div class="cell code" execution_count="11" id="xHF2_FWiCjTQ">
+
 ``` python
 # 1、Pclass、Age、Fare
 df["Age"].fillna(df["Age"].mean(), inplace=True)
@@ -314,9 +363,11 @@ normalized_df = pd.DataFrame(normalized_data, columns=normalize_columns)
 
 df[normalize_columns] = normalized_df
 ```
-:::
 
-::: {.cell .code execution_count="12" id="b1JIzm1-Cn4p"}
+</div>
+
+<div class="cell code" execution_count="12" id="b1JIzm1-Cn4p">
+
 ``` python
 # 2、SibSp、Parch
 df["Family_size"] = df["SibSp"] + df["Parch"] + 1
@@ -325,14 +376,19 @@ df["Family_Single"] = df["Family_size"].map(lambda s: 1 if s == 1 else 0)
 df["Family_Small"] = df["Family_size"].map(lambda s: 1 if 2 <= s <= 4 else 0)
 df["Family_Large"] = df["Family_size"].map(lambda s: 1 if 5 <= s else 0)
 ```
-:::
 
-::: {.cell .code execution_count="13" colab="{\"base_uri\":\"https://localhost:8080/\"}" id="vmulEFrGDI5P" outputId="fab6faf3-08f9-4a67-a318-359373fc6a10"}
+</div>
+
+<div class="cell code" execution_count="13"
+colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}"
+id="vmulEFrGDI5P" outputId="fab6faf3-08f9-4a67-a318-359373fc6a10">
+
 ``` python
 df.info()
 ```
 
-::: {.output .stream .stdout}
+<div class="output stream stdout">
+
     <class 'pandas.core.frame.DataFrame'>
     RangeIndex: 891 entries, 0 to 890
     Data columns (total 68 columns):
@@ -408,10 +464,15 @@ df.info()
      67  Family_Large    891 non-null    int64  
     dtypes: float64(3), int64(59), object(6)
     memory usage: 473.5+ KB
-:::
-:::
 
-::: {.cell .code execution_count="14" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":1000}" id="rr4jsOauCtAu" outputId="be5fba4f-4bf3-4a8a-97ae-cdb0927adadb"}
+</div>
+
+</div>
+
+<div class="cell code" execution_count="14"
+colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:1000}"
+id="rr4jsOauCtAu" outputId="be5fba4f-4bf3-4a8a-97ae-cdb0927adadb">
+
 ``` python
 plot_distribution(df, var="Pclass", target="Survived", row="Sex")  # 繪出Pclass與Survived的關係，Pclass 3的乘客的生存率較低
 plot_distribution(df, var="Age", target="Survived", row="Sex")  # 繪出Age與Survived的關係，Age與是否生存的關係較不明顯
@@ -423,40 +484,56 @@ plot_distribution(df, var="Fare", target="Survived", row="Sex")  # 繪出Fare與
 plt.show()
 ```
 
-::: {.output .display_data}
-![](vertopal_97070aa08a854259961b348097bc3714/a8245aab52e900d1e596cf2585faf3f587e7bea7.png)
-:::
+<div class="output display_data">
 
-::: {.output .display_data}
-![](vertopal_97070aa08a854259961b348097bc3714/0c302897e7bc118330b0b003c76bc44ecba22d18.png)
-:::
+![](a8245aab52e900d1e596cf2585faf3f587e7bea7.png)
 
-::: {.output .display_data}
-![](vertopal_97070aa08a854259961b348097bc3714/2638799b481ea06b28d02b0fb5600c8de115f816.png)
-:::
+</div>
 
-::: {.output .display_data}
-![](vertopal_97070aa08a854259961b348097bc3714/3d6ca5d36d2786cc89042d877d2c14d75aa91f7a.png)
-:::
+<div class="output display_data">
 
-::: {.output .display_data}
-![](vertopal_97070aa08a854259961b348097bc3714/bf697600be9a2ee0befbad697c19d9c342d15566.png)
-:::
+![](0c302897e7bc118330b0b003c76bc44ecba22d18.png)
 
-::: {.output .display_data}
-![](vertopal_97070aa08a854259961b348097bc3714/fc5ccfb3ad65a90955e85df14c0da4649d2a8d3c.png)
-:::
-:::
+</div>
 
-::: {.cell .code execution_count="18" id="fvQRkV8eEBU2"}
+<div class="output display_data">
+
+![](2638799b481ea06b28d02b0fb5600c8de115f816.png)
+
+</div>
+
+<div class="output display_data">
+
+![](3d6ca5d36d2786cc89042d877d2c14d75aa91f7a.png)
+
+</div>
+
+<div class="output display_data">
+
+![](bf697600be9a2ee0befbad697c19d9c342d15566.png)
+
+</div>
+
+<div class="output display_data">
+
+![](fc5ccfb3ad65a90955e85df14c0da4649d2a8d3c.png)
+
+</div>
+
+</div>
+
+<div class="cell code" execution_count="18" id="fvQRkV8eEBU2">
+
 ``` python
 # 整理Dataset內容，將沒有特別意義的或已處理過的資料去除
 df.drop(columns=["PassengerId", "Name", "SibSp", "Parch", "Ticket", "Cabin", "Embarked", "Title", "Ticket_cat", "Family_size"],
     axis=1, inplace=True, errors="ignore")
 ```
-:::
 
-::: {.cell .code execution_count="19" id="UcTNGzi-EEn5"}
+</div>
+
+<div class="cell code" execution_count="19" id="UcTNGzi-EEn5">
+
 ``` python
 df_train = df.copy()
 
@@ -466,9 +543,13 @@ columns_y = ['Survived']
 train_X = df_train[list(columns_X)]
 train_y = df_train[columns_y]
 ```
-:::
 
-::: {.cell .code execution_count="20" colab="{\"base_uri\":\"https://localhost:8080/\"}" id="Q7UiY7fuEITS" outputId="a5b6afac-b4de-4482-e4a8-e20ca2f9b1c3"}
+</div>
+
+<div class="cell code" execution_count="20"
+colab="{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}"
+id="Q7UiY7fuEITS" outputId="a5b6afac-b4de-4482-e4a8-e20ca2f9b1c3">
+
 ``` python
 log = LogisticRegression(random_state=0, max_iter=3000)
 scores = cross_val_score(log, train_X, train_y.values.ravel(), cv=5, scoring='accuracy')
@@ -476,8 +557,11 @@ print(scores)
 print(scores.mean())
 ```
 
-::: {.output .stream .stdout}
+<div class="output stream stdout">
+
     [0.81564246 0.81460674 0.81460674 0.8258427  0.85955056]
     0.8260498399347185
-:::
-:::
+
+</div>
+
+</div>
